@@ -1,0 +1,72 @@
+<script type="text/javascript">
+    RED.nodes.registerType('bitrix24-crm-leads', {
+        category: 'Bitrix24',
+        color: '#5DE2E7',
+        defaults: {
+            name: { value: 'Bitrix24 CRM Leads' },
+            operationType: { value: "", required: true },
+            webhook: { value: '', required: true }
+        },
+        inputs: 1,
+        outputs: 1,
+        label: function() {
+            return this.name || 'Bitrix24 CRM Leads';
+        },
+        oneditprepare: function() {
+            // Populate the operation types dropdown
+            const operationType = this.operationType; // Get the current operation type
+            $('#node-input-operationType').html(
+                '<option value="">Choose One</option>' +
+                '<option value="1">Add</option>' +
+                '<option value="2">Update</option>' +
+                '<option value="3">Get</option>' +
+                '<option value="4">List</option>' +
+                '<option value="5">Fields</option>'
+            );
+
+            // Set the selected option based on the current operationType
+            $('#node-input-operationType').val(operationType);
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="bitrix24-crm-leads">
+    <div class="form-row">
+        <label for="node-input-name">
+            <i class="fa fa-tag"></i> Name
+        </label>
+        <input type="text" id="node-input-name" placeholder="Node name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-operationType">
+            <i class="fa fa-cogs"></i> Operation Type
+        </label>
+        <select id="node-input-operationType" style="width: 100%;">
+            <!-- Populated in oneditprepare -->
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-webhook">
+            <i class="fa fa-link"></i> Webhook URL
+        </label>
+        <input type="text" id="node-input-webhook" placeholder="Enter Bitrix Webhook URL">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="bitrix24-crm-leads">
+    <h3>Bitrix24 CRM Leads Node</h3>
+    <p>
+        The <strong>Bitrix24 CRM Leads</strong> node is designed to manage leads within the Bitrix24 CRM system through the provided webhook URL. It supports various operations such as adding, updating, retrieving, and listing leads using the <code>@2bad/bitrix</code> library to interact with the Bitrix API.
+    </p>
+    <br>
+    <h4>Node Options</h4>
+    <ul>
+        <li><strong>Add:</strong> Creates a new lead in the Bitrix24 CRM.</li>
+        <li><strong>Update:</strong> Updates an existing lead using the lead ID.</li>
+        <li><strong>Get:</strong> Retrieves details of a specific lead using the lead ID.</li>
+        <li><strong>List:</strong> Lists all leads, with options to select specific fields.</li>
+        <li><strong>Fields:</strong> Retrieves the field definitions for a specific lead type.</li>
+    </ul>
+</script>

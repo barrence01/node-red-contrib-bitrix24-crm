@@ -1,0 +1,37 @@
+{
+  "name": "node-red-contrib-bitrix24-crm",
+  "version": "1.0.0",
+  "description": "A node-red plugin for bitrix24 webhooks",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node-red",
+    "bitrix"
+  ],
+  "author": "William Barrence",
+  "license": "Apache-2.0",
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "bitrix24-crm-leads": "bitrix24-crm-leads.js",
+      "bitrix24-crm-deals": "bitrix24-crm-deals.js",
+      "bitrix24-crm-deals-productrows": "bitrix24-crm-deals-productrows.js",
+      "bitrix24-crm-products": "bitrix24-crm-products.js"
+    }
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "dependencies": {
+    "@2bad/bitrix": "^2.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/node-red-contrib-bitrix24-crm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/node-red-contrib-bitrix24-crm/issues"
+  },
+  "homepage": "https://github.com/yourusername/node-red-contrib-bitrix24-crm#readme"
+}
