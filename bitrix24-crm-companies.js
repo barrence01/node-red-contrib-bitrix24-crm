@@ -1,5 +1,5 @@
 module.exports = function(RED) {
-    function Bitrix24CrmProducts(config) {
+    function Bitrix24CrmCompanies(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
@@ -13,7 +13,7 @@ module.exports = function(RED) {
                 const webhook = msg.webhook || config.webhook; // Get updated webhook if provided
                 
                 // Use the current webhook for the request
-                bitrix_webhook.products = Bitrix(webhook).products; // Reinitialize with updated webhook
+                bitrix_webhook.companies = Bitrix(webhook).companies; // Reinitialize with updated webhook
 
                 switch (operationType) {
                     case '1':
@@ -31,9 +31,6 @@ module.exports = function(RED) {
                     case '5':
                         fields(msg, send, done);
                         break;
-                    case '6':
-                        deletes(msg, send, done);
-                        break;
                     default:
                         done(new Error("Invalid operation type"));
                         break;
@@ -47,16 +44,21 @@ module.exports = function(RED) {
                     done();
                     return;
                 }
+                if (!msg.params) {
+                    node.warn("The 'params' property is required.");
+                    done();
+                    return;
+                }
 
-                bitrix_webhook.products.create(msg.fields)
+                bitrix_webhook.companies.create(msg.fields, msg.params)
                     .then(({ result }) => {
-                        node.warn('Product created successfully with ID:', result);
+                        node.warn('Company created successfully with ID:', result);
                         msg['payload'] = result;
                         node.send(msg);
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to create product: " + err.message);
+                        node.error("Failed to create company: " + err.message);
                         done(err);
                     });
             }
@@ -73,15 +75,20 @@ module.exports = function(RED) {
                     done();
                     return;
                 }
+                if (!msg.params) {
+                    node.warn("The 'params' property is required.");
+                    done();
+                    return;
+                }
 
-                bitrix_webhook.products.update(msg.id, msg.fields)
+                bitrix_webhook.companies.update(msg.id, msg.fields, msg.params)
                     .then(({ result }) => {
                         msg['payload'] = result;
                         node.send(msg);
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to update product: " + err.message);
+                        node.error("Failed to update company: " + err.message);
                         done(err);
                     });
             }
@@ -94,14 +101,14 @@ module.exports = function(RED) {
                     return;
                 }
 
-                bitrix_webhook.products.get(msg.id)
+                bitrix_webhook.companies.get(msg.id)
                     .then(({ result }) => {
                         msg['payload'] = result;
                         node.send(msg);
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to get product: " + err.message);
+                        node.error("Failed to get company: " + err.message);
                         done(err);
                     });
             }
@@ -114,14 +121,14 @@ module.exports = function(RED) {
                     return;
                 }
 
-                bitrix_webhook.products.list(msg.select)
+                bitrix_webhook.companies.list(msg.select)
                     .then(({ result }) => {
                         msg['payload'] = result;
                         node.send(msg);
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to list products: " + err.message);
+                        node.error("Failed to list companies: " + err.message);
                         done(err);
                     });
             }
@@ -134,7 +141,7 @@ module.exports = function(RED) {
                     return;
                 }
 
-                bitrix_webhook.products.fields(msg.id)
+                bitrix_webhook.companies.fields()
                     .then(({ result }) => {
                         msg['payload'] = result;
                         node.send(msg);
@@ -145,26 +152,6 @@ module.exports = function(RED) {
                         done(err);
                     });
             }
-
-            function deletes(msg, send, done) {
-
-                if (!msg.id) {
-                    node.warn("The 'id' property is required.");
-                    done();
-                    return;
-                }
-
-                bitrix_webhook.products.delete(msg.id)
-                    .then(({ result }) => {
-                        msg['payload'] = result;
-                        node.send(msg);
-                        done();
-                    })
-                    .catch(err => {
-                        node.error("Failed to get product: " + err.message);
-                        done(err);
-                    });
-            }
         }).catch(err => {
             node.error("Failed to load Bitrix module:", err);
         });
@@ -172,5 +159,5 @@ module.exports = function(RED) {
 
     
 
-    RED.nodes.registerType("bitrix24-crm-products", Bitrix24CrmProducts);
+    RED.nodes.registerType("bitrix24-crm-companies", Bitrix24CrmCompanies);
 };

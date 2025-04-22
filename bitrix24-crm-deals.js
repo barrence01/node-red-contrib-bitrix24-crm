@@ -52,13 +52,13 @@ module.exports = function(RED) {
 
                 bitrix_webhook.deals.create(msg.fields, msg.params)
                     .then(({ result }) => {
-                        node.warn('Lead created successfully with ID:', result);
+                        node.warn('Deal created successfully with ID:', result);
                         msg['payload'] = result;
                         node.send(msg);
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to create lead: " + err.message);
+                        node.error("Failed to create deal: " + err.message);
                         done(err);
                     });
             }
@@ -88,7 +88,7 @@ module.exports = function(RED) {
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to update lead: " + err.message);
+                        node.error("Failed to update deal: " + err.message);
                         done(err);
                     });
             }
@@ -108,7 +108,7 @@ module.exports = function(RED) {
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to get lead: " + err.message);
+                        node.error("Failed to get deal: " + err.message);
                         done(err);
                     });
             }

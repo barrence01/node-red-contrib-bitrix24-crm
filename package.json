@@ -17,7 +17,9 @@
       "bitrix24-crm-leads": "bitrix24-crm-leads.js",
       "bitrix24-crm-deals": "bitrix24-crm-deals.js",
       "bitrix24-crm-deals-productrows": "bitrix24-crm-deals-productrows.js",
-      "bitrix24-crm-products": "bitrix24-crm-products.js"
+      "bitrix24-crm-products": "bitrix24-crm-products.js",
+      "bitrix24-crm-contacts": "bitrix24-crm-contacts.js",
+      "bitrix24-crm-companies": "bitrix24-crm-companies.js"
     }
   },
   "engines": {

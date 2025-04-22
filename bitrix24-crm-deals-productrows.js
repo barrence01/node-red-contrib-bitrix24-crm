@@ -48,7 +48,7 @@ module.exports = function(RED) {
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to update lead: " + err.message);
+                        node.error("Failed to update productrow: " + err.message);
                         done(err);
                     });
             }
@@ -68,7 +68,7 @@ module.exports = function(RED) {
                         done();
                     })
                     .catch(err => {
-                        node.error("Failed to get lead: " + err.message);
+                        node.error("Failed to get productrow: " + err.message);
                         done(err);
                     });
             }
